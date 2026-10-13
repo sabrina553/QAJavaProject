@@ -3,10 +3,20 @@
 ## Why did I do this?
 This is my final project for the QA Software Development Bootcamp. This project is a full CRUD functional api written in Spring. To demonstrate the Java skills learnt in the final weeks of the course.
 
-SkateXut is designed to be a shop interface for Creating, Reading, Updating, and Deleting products. With attributes such as Barcode, Name, Colour, Dimentions, Descriptions. Which will store persistent values using H2 database. This information can be relayed via the Java/SpringBoot backend. With a .jar included. Which can be run locally, and make use of port 8080 to be used for API - Requests can be made via Postman, screenshots provided below
+SkateXut is designed to be a shop interface for Creating, Reading, Updating, and Deleting products. With attributes such as Barcode, Name, Colour, Dimentions, Descriptions. Which will store persistent values using H2 database. This information can be relayed via the Java/SpringBoot backend. It runs locally on port 8080 for API - Requests can be made via Postman, screenshots provided below
 
 
-any dependencies it might need/build
+## Building and running
+
+Needs a JDK (17 or newer) and nothing else; the Maven wrapper downloads Maven and the dependencies.
+
+```bash
+./mvnw test              # 8 tests
+./mvnw package           # builds target/SkateXut-0.0.1-SNAPSHOT.jar
+java -jar target/SkateXut-0.0.1-SNAPSHOT.jar
+```
+
+The built jar used to be committed (52 MB); it is a build output, so it is now produced locally instead.
 
 --------------------------------------------
 
@@ -62,6 +72,13 @@ In the future I would like to keep creating java and I've learnt a lot from this
 I would certainly have more time now knowing how to work with H2, and the general syntax of the dependencies.
 I would like to see myself create more complicated tools and work with other APIs. Generally just more time due to learning more, I could spend implementing more features within the API/Program, but also be able to thoroughly test my project.
 And also do a task that is exciting and more advanced. :) 
+
+### Looking back (2026)
+
+- **Pin the build to the JDK, not just the code.** On JDK 23 and newer the project stopped compiling: `javac` no longer runs annotation processors by default, so Lombok silently generated no getters. Enabling `-proc:full` and updating Lombok fixed it, but a CI build would have caught it the day it broke.
+- **Unit tests should not need a real port.** `ProductServiceUnitTest` started a full web server on port 8080 and failed whenever something else was using it. It now uses a random port; a plain unit test with a mocked repository would be better still.
+- **`updateProduct` deletes and re-adds** the product, so a failed add loses the original. Updating the existing entity in one transaction would be safer.
+- **Do not commit build output** (the jar) or keep spelling slips in API field names (`dimentions`), since they become part of the contract.
 
 
 --------------------------------------------
