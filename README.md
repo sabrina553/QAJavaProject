@@ -81,8 +81,5 @@ And also do a task that is exciting and more advanced. :)
 - **Do not commit build output** (the jar) or keep spelling slips in API field names (`dimentions`), since they become part of the contract.
 
 
---------------------------------------------
-## Jira
-[Jira]()
 
 - Sabrina
